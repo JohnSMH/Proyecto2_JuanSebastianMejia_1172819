@@ -1,5 +1,6 @@
 #pragma once
 
+
 namespace Proyecto2JuanSebastianMejia1172819 {
 
 	using namespace System;
@@ -8,6 +9,8 @@ namespace Proyecto2JuanSebastianMejia1172819 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Media;
+	using namespace System::Threading;
 
 	/// <summary>
 	/// Summary for FormSonar
@@ -39,8 +42,9 @@ namespace Proyecto2JuanSebastianMejia1172819 {
 	protected:
 
 
-	private: System::Windows::Forms::TextBox^ textBox1;
+
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::MaskedTextBox^ maskedTextBoxPost;
 	protected:
 
 	private:
@@ -58,8 +62,8 @@ namespace Proyecto2JuanSebastianMejia1172819 {
 		{
 			this->buttonOK = (gcnew System::Windows::Forms::Button());
 			this->buttonDormir = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->maskedTextBoxPost = (gcnew System::Windows::Forms::MaskedTextBox());
 			this->SuspendLayout();
 			// 
 			// buttonOK
@@ -82,14 +86,6 @@ namespace Proyecto2JuanSebastianMejia1172819 {
 			this->buttonDormir->UseVisualStyleBackColor = true;
 			this->buttonDormir->Click += gcnew System::EventHandler(this, &FormSonar::ButtonDormir_Click);
 			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(54, 86);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 2;
-			this->textBox1->TextChanged += gcnew System::EventHandler(this, &FormSonar::TextBox1_TextChanged);
-			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
@@ -99,31 +95,53 @@ namespace Proyecto2JuanSebastianMejia1172819 {
 			this->label1->TabIndex = 3;
 			this->label1->Text = L"Cantidad en segundos";
 			// 
+			// maskedTextBoxPost
+			// 
+			this->maskedTextBoxPost->Location = System::Drawing::Point(67, 86);
+			this->maskedTextBoxPost->Mask = L"0000000000";
+			this->maskedTextBoxPost->Name = L"maskedTextBoxPost";
+			this->maskedTextBoxPost->Size = System::Drawing::Size(76, 20);
+			this->maskedTextBoxPost->TabIndex = 4;
+			this->maskedTextBoxPost->ValidatingType = System::Int32::typeid;
+			// 
 			// FormSonar
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(211, 147);
+			this->Controls->Add(this->maskedTextBoxPost);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->buttonDormir);
 			this->Controls->Add(this->buttonOK);
 			this->Name = L"FormSonar";
 			this->Text = L"FormSonar";
+			this->Load += gcnew System::EventHandler(this, &FormSonar::FormSonar_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+	public: System::Void playSimpleSound() {
+		SoundPlayer^ hola = gcnew SoundPlayer("ruido.wav");
+		hola->Play();
+	}
 	private: System::Void TextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void ButtonOK_Click(System::Object^ sender, System::EventArgs^ e) {
 		Close();
 	}
 private: System::Void ButtonDormir_Click(System::Object^ sender, System::EventArgs^ e) {
-	Timer^tiem = gcnew Timer();
 	
+	Hide();
+	Thread::Sleep(Convert::ToInt32(maskedTextBoxPost->Text)*1000);
+	Show();
 
+}
+
+		 
+
+private: System::Void FormSonar_Load(System::Object^ sender, System::EventArgs^ e) {
+	playSimpleSound();
 }
 };
 }

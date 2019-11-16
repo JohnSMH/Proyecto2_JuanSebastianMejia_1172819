@@ -10,6 +10,7 @@
 #include "FormActividad.h"
 #include "FormRecordatorio.h"
 #include "FormAlarma.h"
+#include "FormSonar.h"
 
 
 
@@ -379,14 +380,6 @@ private: System::Void ButtonMes_Click(System::Object^ sender, System::EventArgs^
 		
 	}
 
-	
-	DateTime hola;
-	hola=hola.Now;
-	MessageBox::Show(hola.Day.ToString());
-	MessageBox::Show(hola.Hour.ToString());
-	MessageBox::Show(hola.Minute.ToString());
-	MessageBox::Show(hola.Second.ToString());
-
 	}
 
 	
@@ -466,7 +459,7 @@ private: System::Void ButtonUsuario_Click(System::Object^ sender, System::EventA
 								{
 									if (hora== ahora->Hour)
 									{
-										MessageBox::Show("Hora de actividad alcanzada: "+mes+"/"+dia+": "+hora);
+										MessageBox::Show("Hora de actividad alcanzada: "+mes+"/"+dia+": "+hora+":00");
 									}
 								}
 							}
@@ -491,7 +484,11 @@ private: System::Void ButtonUsuario_Click(System::Object^ sender, System::EventA
 								{
 									if (hora == ahora->Hour)
 									{
-										MessageBox::Show("Hora de actividad alcanzada: " + mes + "/" + dia + ": " + hora+"\n"+text);
+										MessageBox::Show("Recordatorio: "+text);
+										
+
+										FormSonar^ fom = gcnew FormSonar();
+										fom->ShowDialog();
 									}
 								}
 							}
@@ -516,8 +513,10 @@ private: System::Void ButtonUsuario_Click(System::Object^ sender, System::EventA
 									if (hora == ahora->Hour)
 									{
 										//abrir form de suena alarma;
+										MessageBox::Show("Alarma");
 
-										MessageBox::Show("Hora de actividad alcanzada: " + mes + "/" + dia + ": " + hora);
+										FormSonar^ fom = gcnew FormSonar();
+										fom->ShowDialog();
 									}
 								}
 							}
